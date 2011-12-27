@@ -1,8 +1,6 @@
 require 'test/unit'
 require 'rgoogle'
 
-$argv = ARGV.dup
-
 class RGoogleTest < Test::Unit::TestCase
   # get an API key, https://code.google.com/apis/loader/signup.html
   TEST_KEY = '[YOUR GOOGLE AJAX SEARCH API KEY]'
