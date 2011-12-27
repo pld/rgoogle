@@ -5,6 +5,9 @@ https://rubygems.org/gems/rgoogle
 
 h2. Installation
 
+* Get an API key, https://code.google.com/apis/loader/signup.html
+* install the gem
+
 @gem install rgoogle@
 
 h2. Example
