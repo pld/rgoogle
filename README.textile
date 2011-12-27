@@ -15,6 +15,11 @@ h2. Example
 @>> RGoogle.new('[API KEY]', '[Referer]').search('helioid')@
 @=> [ #<Result:...>, ... ]@
 
+Get 8 pages, the maximum number of pages.  There are 8 results to a page.
+
+@>> RGoogle.new('[API KEY]', '[Referer]', 8).search('helioid').length@
+@=> 64@
+
 h2. Ownership
 
 Copyright (c) 2011, Peter Lubell-Doughtie. Licensed under the 3-clause BSD License, which is also known as the "Modified BSD License". Full text of the license is below. This license is GPL compatible (http://www.gnu.org/licenses/license-list.html#ModifiedBSD).

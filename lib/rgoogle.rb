@@ -14,17 +14,18 @@ class RGoogle
   # Arguments:
   #   key: (String)
   #   referer: (String)
+  #   pages: (Integer+ <= 8)
 
   NUM_RESULTS_PER_PAGE = 8
-  PAGES = 6 # max 8
   API_PATH = "http://ajax.googleapis.com/ajax/services/search/web"
   API_URI = URI.parse(API_PATH)
 
-  attr_accessor :key, :referer
+  attr_accessor :key, :referer, :pages
 
-  def initialize(key, referer)
+  def initialize(key, referer='', pages=6)
     @key = key
     @referer = referer
+    @pages = pages < 8 ? pages : 8
   end
 
   def search(query)
@@ -34,7 +35,7 @@ class RGoogle
     threads = []
     date = Time.now
 
-    1.upto(PAGES) do |start|
+    1.upto(@pages) do |start|
       threads << Thread.new(start) do |_start|
         data = "#{params}#{(_start - 1) * NUM_RESULTS_PER_PAGE}"
         apicall = Net::HTTP.new(api.host)

@@ -6,7 +6,7 @@ class RGoogleTest < Test::Unit::TestCase
   TEST_KEY = '[YOUR GOOGLE AJAX SEARCH API KEY]'
 
   def test_set_key
-    rg = RGoogle.new('valid-key', '')
+    rg = RGoogle.new('valid-key')
     assert_equal 'valid-key', rg.key
   end
 
@@ -20,6 +20,13 @@ class RGoogleTest < Test::Unit::TestCase
     # use a valid google key to run test
     rg = RGoogle.new(TEST_KEY, 'example.com')
     assert_equal false, rg.search('helioid').empty?
+  end
+
+  # requires internet connectivity
+  def test_get_pages_search_responses
+    # use a valid google key to run test
+    rg = RGoogle.new(TEST_KEY, 'example.com', 8)
+    assert_equal 8 * 8, rg.search('helioid').length
   end
 end
 
