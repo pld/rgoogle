@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'rgoogle'
-  s.version     = '0.0.4'
+  s.version     = '0.0.5'
   s.summary     = 'API for Google AJAX search'
   s.description = 'API for Google AJAX search'
   s.authors     = ['Peter Lubell-Doughtie']
