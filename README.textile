@@ -13,7 +13,7 @@ h2. Installation
 h2. Example
 
 @>> RGoogle.new('[API KEY]', '[Referer]').search('helioid')@
-@=> [ #<Result:...>, ... ]@
+@=> [ #<GoogleResult:...>, ... ]@
 
 Get 8 pages, the maximum number of pages.  There are 8 results to a page.
 

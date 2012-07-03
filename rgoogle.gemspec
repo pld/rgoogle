@@ -5,6 +5,6 @@ Gem::Specification.new do |s|
   s.description = 'API for Google AJAX search'
   s.authors     = ['Peter Lubell-Doughtie']
   s.email       = 'peter@helioid.com'
-  s.files       = ['lib/rgoogle.rb', 'lib/result.rb']
+  s.files       = ['lib/rgoogle.rb']
   s.homepage    = 'http://www.helioid.com/'
 end

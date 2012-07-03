@@ -1,15 +1,18 @@
 require 'cgi'
 require 'json'
 require 'net/http'
-require 'result'
 require 'uri'
+
+
+GoogleResult = Struct.new :title, :abstract, :url, :date
+
 
 class RGoogle
   # API to Google's AJAX search API
   # 
   # Example:
   #   >> RGoogle.new('[API KEY]', '[Referer]').search('helioid')
-  #   => [ #<Result:...>, ... ]
+  #   => [ #<GoogleResult:...>, ... ]
   #
   # Arguments:
   #   key: (String)
@@ -42,12 +45,12 @@ class RGoogle
         response = apicall.get2(api.path + data, { 'Referer' => @referer })
         response = JSON.parse(response.body)
         results += response["responseData"]["results"].map do |result|
-          Result.new({
-            :title => result["titleNoFormatting"],
-            :abstract => result["content"],
-            :url => result["unescapedUrl"],
-            :date => date
-          })
+          GoogleResult.new(
+            result["titleNoFormatting"],
+            result["content"],
+            result["unescapedUrl"],
+            date
+          )
         end
       end
     end
