@@ -32,30 +32,36 @@ class RGoogle
   end
 
   def search(query)
-    api = API_URI
     results = []
-    params = "?v=1.0&key=#{@key}&q=#{CGI.escape(query)}&rsz=large&start="
     threads = []
-    date = Time.now
+    @params ||= "?v=1.0&key=#{@key}&q=#{CGI.escape(query)}&rsz=large&start="
+    @date ||= Time.now
 
-    1.upto(@pages) do |start|
-      threads << Thread.new(start) do |_start|
-        data = "#{params}#{(_start - 1) * NUM_RESULTS_PER_PAGE}"
-        apicall = Net::HTTP.new(api.host)
-        response = apicall.get2(api.path + data, { 'Referer' => @referer })
-        response = JSON.parse(response.body)
-        results += response["responseData"]["results"].map do |result|
-          GoogleResult.new(
-            result["titleNoFormatting"],
-            result["content"],
-            result["unescapedUrl"],
-            date
-          )
-        end
+    1.upto(@pages) do |i|
+      threads << Thread.new(i) do |start|
+        results += get_results(start)
       end
     end
+
     threads.each { |thread| thread.join }
+    @date = @params = nil
+
     results
+  end
+
+  def get_results(start)
+    data = "#{@params}#{(start - 1) * NUM_RESULTS_PER_PAGE}"
+    apicall = Net::HTTP.new(API_URI.host)
+    response = apicall.get2(API_URI.path + data, { 'Referer' => @referer })
+    response = JSON.parse(response.body)
+    response["responseData"]["results"].map do |result|
+      GoogleResult.new(
+        result["titleNoFormatting"],
+        result["content"],
+        result["unescapedUrl"],
+        @date
+      )
+    end
   end
 end
 
